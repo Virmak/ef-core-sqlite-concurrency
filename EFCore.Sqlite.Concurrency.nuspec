@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>EFCore.Sqlite.Concurrency</id>
+    <version>$version$</version>
+    <title>EFCore.Sqlite.Concurrency</title>
+    <description>EF Core Sqlite concurrency token</description>
+    <authors>Mohamed ben amar</authors>
+    <owners>Mohamed ben amar</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/virmak/concurlite</projectUrl>
+    <readme>README.md</readme>
+    <license type="expression">MIT</license>
+    <dependencies>
+      <group targetFramework=".net8.0" />
+    </dependencies>
+  </metadata>
+  <files>
+  
+    <file src="README.md" target="" />
+    <file src="src/EFCore.Sqlite.Concurrency/bin/$configuration$/net8.0/EFCore.Sqlite.Concurrency.dll" target="lib/net8.0" />
+    <file src="src/EFCore.Sqlite.Concurrency.SourceGen/bin/$configuration$/netstandard2.0/EFCore.Sqlite.Concurrency.Sourcegen.dll" target="analyzers\dotnet\cs" />
+  </files>
+</package>

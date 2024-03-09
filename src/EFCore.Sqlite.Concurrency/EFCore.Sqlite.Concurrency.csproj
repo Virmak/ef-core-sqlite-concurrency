@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- <TargetFrameworks>net8.0;net7.0;net6.0;net5.0;netstandard2.1;netstandard2.0;net462;netcoreapp3.1;</TargetFrameworks> -->
+    
+
+    <PackageId>EFCore.Sqlite.Concurrency</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Mohamed ben amar</Authors>
+    <Description>EF Core Sqlite automatic concurrency token</Description>
+    <PackageTags>EntityFramework;Concurrency;Trigger;Sqlite;EFCore;ORM;.NET Core;aspnetcore</PackageTags>
+    <Product>EFCore.Sqlite.Concurrency</Product>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/virmak/concurlite</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.2" />
+  </ItemGroup>
+</Project>
