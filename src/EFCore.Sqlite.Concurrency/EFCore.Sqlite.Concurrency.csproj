@@ -7,11 +7,11 @@
     <PackageId>EFCore.Sqlite.Concurrency</PackageId>
     <Version>0.1.0</Version>
     <Authors>Mohamed ben amar</Authors>
-    <Description>EF Core Sqlite automatic concurrency token</Description>
+    <Description>EF Core Sqlite concurrency token migration extension</Description>
     <PackageTags>EntityFramework;Concurrency;Trigger;Sqlite;EFCore;ORM;.NET Core;aspnetcore</PackageTags>
     <Product>EFCore.Sqlite.Concurrency</Product>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/virmak/concurlite</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/virmak/ef-core-sqlite-concurrency</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

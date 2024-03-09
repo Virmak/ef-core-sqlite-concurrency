@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.Sqlite.Concurrency",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.Sqlite.Concurrency.Example", "src\EFCore.Sqlite.Concurrency.Example\EFCore.Sqlite.Concurrency.Example.csproj", "{789E6C16-7250-439D-9A78-6BC9F96260B1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DC7E1120-F247-4C67-8D16-D891DB9910A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFCore.Sqlite.Concurrency.Tests", "test\EFCore.Sqlite.Concurrency.Tests\EFCore.Sqlite.Concurrency.Tests.csproj", "{3443CB71-65CC-42B5-82FB-AB272736FDFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,10 @@ Global
 		{789E6C16-7250-439D-9A78-6BC9F96260B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{789E6C16-7250-439D-9A78-6BC9F96260B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{789E6C16-7250-439D-9A78-6BC9F96260B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3443CB71-65CC-42B5-82FB-AB272736FDFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3443CB71-65CC-42B5-82FB-AB272736FDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3443CB71-65CC-42B5-82FB-AB272736FDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3443CB71-65CC-42B5-82FB-AB272736FDFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +45,7 @@ Global
 		{868565F2-E730-4BB5-8AC0-A97815EB8252} = {80D6AF10-4153-4B6A-9952-D0E9CF38E0ED}
 		{1A8EC78D-2CDD-4E76-8DA1-0E294E58123D} = {80D6AF10-4153-4B6A-9952-D0E9CF38E0ED}
 		{789E6C16-7250-439D-9A78-6BC9F96260B1} = {80D6AF10-4153-4B6A-9952-D0E9CF38E0ED}
+		{3443CB71-65CC-42B5-82FB-AB272736FDFD} = {DC7E1120-F247-4C67-8D16-D891DB9910A2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {305B5222-BA9A-4282-A14C-B9A23A4B4880}
