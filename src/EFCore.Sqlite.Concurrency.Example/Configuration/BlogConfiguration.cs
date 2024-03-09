@@ -1,8 +1,7 @@
-using EFCore.Sqlite.Concurrency;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ConcurLite.Example.Configuration;
+namespace EFCore.Sqlite.Concurrency.Example.Configuration;
 
 public class BlogConfiguration : IEntityTypeConfiguration<Blog>
 {
@@ -10,10 +9,18 @@ public class BlogConfiguration : IEntityTypeConfiguration<Blog>
     {
         builder
             .HasConcurrencyToken();
+
+        // Specify the colomn name that will be created
+        // builder
+        //     .HasConcurrencyToken("RowVersion");
+
+        // Use existing property on the model
+        // builder
+        //     .HasConcurrencyToken(b => b.RowVerion);
+
         builder
             .Property(b => b.Url)
             .IsRequired();
-
-        // builder.Property<string>("Shadow");
+            
     }
 }

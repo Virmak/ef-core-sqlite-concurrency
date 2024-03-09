@@ -5,11 +5,11 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{80D6AF10-4153-4B6A-9952-D0E9CF38E0ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.Sqlite.Concurrency.Sourcegen", "src\EFCore.Sqlite.Concurrency.SourceGen\EFCore.Sqlite.Concurrency.Sourcegen.csproj", "{868565F2-E730-4BB5-8AC0-A97815EB8252}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.Sqlite.Concurrency.SourceGenerator", "src\EFCore.Sqlite.Concurrency.SourceGenerator\EFCore.Sqlite.Concurrency.SourceGenerator.csproj", "{868565F2-E730-4BB5-8AC0-A97815EB8252}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.Sqlite.Concurrency", "src\EFCore.Sqlite.Concurrency\EFCore.Sqlite.Concurrency.csproj", "{1A8EC78D-2CDD-4E76-8DA1-0E294E58123D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConcurLite.Example", "src\ConcurLite.Example\ConcurLite.Example.csproj", "{789E6C16-7250-439D-9A78-6BC9F96260B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFCore.Sqlite.Concurrency.Example", "src\EFCore.Sqlite.Concurrency.Example\EFCore.Sqlite.Concurrency.Example.csproj", "{789E6C16-7250-439D-9A78-6BC9F96260B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

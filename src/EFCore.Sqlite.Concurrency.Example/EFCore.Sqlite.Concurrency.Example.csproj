@@ -9,7 +9,7 @@
 
   <ItemGroup>
 
-    <!-- <PackageReference Include="EFCore.Sqlite.Concurrency" Version="0.1.0" /> -->
+    <PackageReference Include="EFCore.Sqlite.Concurrency" Version="0.1.1" />
 
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
       <PrivateAssets>all</PrivateAssets>
@@ -18,10 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EFCore.Sqlite.Concurrency\EFCore.Sqlite.Concurrency.csproj" />
+    <!-- <ProjectReference Include="..\EFCore.Sqlite.Concurrency\EFCore.Sqlite.Concurrency.csproj" /> -->
 
-    <ProjectReference Include="..\EFCore.Sqlite.Concurrency.SourceGen\EFCore.Sqlite.Concurrency.SourceGen.csproj"
+    <!-- <ProjectReference Include="..\EFCore.Sqlite.Concurrency.SourceGenerator\EFCore.Sqlite.Concurrency.SourceGenerator.csproj"
                       OutputItemType="Analyzer"
-                      ReferenceOutputAssembly="false" />
+                      ReferenceOutputAssembly="false" /> -->
   </ItemGroup>
 </Project>

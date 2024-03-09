@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace EFCore.Sqlite.Concurrency.Core;
 
-public class CSharpConcurrencyTriggerMigrationOperationGenerator : CSharpMigrationOperationGenerator
+internal class CSharpConcurrencyTriggerMigrationOperationGenerator : CSharpMigrationOperationGenerator
 {
     public CSharpConcurrencyTriggerMigrationOperationGenerator(
         CSharpMigrationOperationGeneratorDependencies dependencies)

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The EF Core SQLite Concurrency Extension is a C# library designed to extend Entity Framework Core (EF Core) to support optimistic concurrency with SQLite databases. This library provides extension methods for EF Core DbContext or DbSet, enabling the creation of concurrency tokens and generating migrations to implement optimistic concurrency in SQLite databases.
+This library enables the creation of concurrency tokens and generating migrations to implement optimistic concurrency in EF Core using SQLite databases.
 
 ### Motivation
 
@@ -10,7 +10,7 @@ SQLite is one of the providers that doesn’t support concurrency tokens out of 
 
 ## Features
 
-- **Extension Methods:** Extension methods for EF Core DbContext or DbSet to facilitate the creation of concurrency tokens.
+- **Extension Methods:** Extension methods for EF Core EntityTypeBuilder to facilitate the creation of concurrency tokens.
 - **Migration Generation:** Functionality to generate EF Core migrations that apply schema modifications required for optimistic concurrency support in SQLite.
 - **Easy Integration:** Seamless integration with existing EF Core projects, enabling developers to add optimistic concurrency support with minimal effort.
 
@@ -20,3 +20,58 @@ To use the EF Core SQLite Concurrency Extension in your project, you can install
 
 ```sh
 dotnet add package EFCore.Sqlite.Concurrency
+```
+
+## Usage
+
+Configure the DbContext with EFCore sqlite concurrency using `AddSqliteConcurrency`
+
+```csharp
+protected override void OnConfiguring(DbContextOptionsBuilder options)
+{
+    options.UseSqlite($"Data Sorce={DbPath}u")
+        .AddSqliteConcurrency();
+}
+```
+
+### Adding Concurrency Tokens
+
+There's two ways to setup a concurrency token for your models
+
+#### Define token in DbContext.OnModelCreating
+
+```csharp
+using EFCore.Sqlite.Concurrency;
+
+protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    base.OnModelCreating(modelBuilder);
+
+    modelBuilder
+        .Entity<MyEntity>()
+        .HasConcurrencyToken();
+}
+```
+
+This will generate a new shadow property, if you prefer to use a property defined in your model, another overload is available for `HasConcurrencyToken` that takes a property expression.
+
+#### Define token in entity configuration class
+
+```csharp
+public void Configure(EntityTypeBuilder<Blog> builder)
+{
+    builder.HasConcurrencyToken();
+}
+```
+
+## Contribution
+
+Contributions to this project are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+
+
+

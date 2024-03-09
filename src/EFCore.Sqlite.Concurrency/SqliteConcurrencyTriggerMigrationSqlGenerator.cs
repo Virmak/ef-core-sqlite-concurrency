@@ -45,14 +45,6 @@ internal class SqliteConcurrencyTriggerMigrationSqlGenerator : SqliteMigrationsS
     private void Generate(CreateConcurrencyTriggerOperation operation,
         MigrationCommandListBuilder builder, IRelationalTypeMappingSource typeMappingSource)
     {
-        // CREATE TRIGGER UpdateCustomerVersion
-        // AFTER UPDATE ON Customers
-        // BEGIN
-        //     UPDATE Customers
-        //     SET Version = Version + 1
-        //     WHERE rowid = NEW.rowid;
-        // END;
-
         builder.AppendLine($"CREATE TRIGGER {operation.TableName.GetTriggerName()}");
         builder.AppendLine($"AFTER UPDATE ON {operation.TableName}");
         builder.AppendLine("BEGIN");

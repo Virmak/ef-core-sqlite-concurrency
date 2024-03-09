@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Update.Internal;
 namespace EFCore.Sqlite.Concurrency.Core;
 
 #pragma warning disable EF1001 // Internal EF Core API usage.
-public class CustomMigrationsModelDiffer : MigrationsModelDiffer
+internal class CustomMigrationsModelDiffer : MigrationsModelDiffer
 {
     public CustomMigrationsModelDiffer(
         IRelationalTypeMappingSource typeMappingSource,
