@@ -12,7 +12,6 @@ public class CSharpConcurrencyTriggerMigrationOperationGenerator : CSharpMigrati
         CSharpMigrationOperationGeneratorDependencies dependencies)
         : base(dependencies)
     {
-        while(!Debugger.IsAttached) Thread.Sleep(1000);
     }
 
     protected override void Generate(MigrationOperation operation, IndentedStringBuilder builder)
@@ -38,13 +37,13 @@ public class CSharpConcurrencyTriggerMigrationOperationGenerator : CSharpMigrati
 
     private static void Generate(CreateConcurrencyTriggerOperation operation, IndentedStringBuilder builder)
     {
-        builder.AppendLine(
+        builder.Append(
             $".{nameof(EFCoreSqliteConcurrencyExtensions.CreateConcurrencyTrigger)}(\"{operation.TableName}\", \"{operation.VersionColumnName}\")");
     }
 
     private static void Generate(DropConcurrencyTriggerOperation operation, IndentedStringBuilder builder)
     {
-        builder.AppendLine(
+        builder.Append(
             $".{nameof(EFCoreSqliteConcurrencyExtensions.DropConcurrencyTrigger)}(\"{operation.TriggerName}\")");
     }
 }

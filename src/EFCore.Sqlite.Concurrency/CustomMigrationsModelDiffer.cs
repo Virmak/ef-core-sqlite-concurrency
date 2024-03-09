@@ -30,8 +30,17 @@ public class CustomMigrationsModelDiffer : MigrationsModelDiffer
         var targetTypes = GetEntityTypesContainingMergeAnnotation(target);
 
         var diffContext = new DiffContext();
-        var mergeMigrationOperations = Diff(sourceTypes, targetTypes, diffContext);
-        return base.GetDifferences(source, target).Concat(mergeMigrationOperations).ToList();
+        var concurrencyMigrationOperations = Diff(sourceTypes, targetTypes, diffContext);
+        var createConcurrencyTriggerOperations = concurrencyMigrationOperations
+            .OfType<CreateConcurrencyTriggerOperation>();
+        var dropConcurrencyTriggerOperations = concurrencyMigrationOperations
+            .OfType<DropConcurrencyTriggerOperation>();
+
+        return [
+            ..dropConcurrencyTriggerOperations,
+            ..base.GetDifferences(source, target),
+            ..createConcurrencyTriggerOperations
+        ];
     }
 
     private IEnumerable<MigrationOperation> Diff(
