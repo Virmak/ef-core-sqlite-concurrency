@@ -20,7 +20,7 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release /p:Version=${VERSION} --no-build
     - name: Pack
-      run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
+      run: nuget pack EFCore.Sqlite.Concurrency.nuspec -Version ${VERSION} -Properties Configuration=Release
     - name: Push
       run: dotnet nuget push EFCore.Sqlite.Concurrency.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGETAPIKEY}
       env:
