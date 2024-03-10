@@ -22,6 +22,8 @@ jobs:
     - name: Pack
       run: nuget pack EFCore.Sqlite.Concurrency.nuspec -Version ${VERSION} -Properties Configuration=Release
     - name: Push
-      run: dotnet nuget push EFCore.Sqlite.Concurrency.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGETAPIKEY}
+      env:
+        NUGETAPIKEY: ${{ secrets.NUGETAPIKEY }}
+      run: dotnet nuget push EFCore.Sqlite.Concurrency.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGETAPIKEY
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
