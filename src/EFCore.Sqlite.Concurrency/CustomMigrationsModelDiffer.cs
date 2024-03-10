@@ -26,19 +26,23 @@ internal class CustomMigrationsModelDiffer : MigrationsModelDiffer
 
     public override IReadOnlyList<MigrationOperation> GetDifferences(IRelationalModel? source, IRelationalModel? target)
     {
-        var sourceTypes = GetEntityTypesContainingMergeAnnotation(source);
-        var targetTypes = GetEntityTypesContainingMergeAnnotation(target);
+        var sourceTypes = GetEntityTypesContainingConcurrencyAnnotation(source);
+        var targetTypes = GetEntityTypesContainingConcurrencyAnnotation(target);
 
         var diffContext = new DiffContext();
         var concurrencyMigrationOperations = Diff(sourceTypes, targetTypes, diffContext);
         var createConcurrencyTriggerOperations = concurrencyMigrationOperations
-            .OfType<CreateConcurrencyTriggerOperation>();
+            .OfType<CreateConcurrencyTriggerOperation>()
+            .ToList();
         var dropConcurrencyTriggerOperations = concurrencyMigrationOperations
-            .OfType<DropConcurrencyTriggerOperation>();
+            .OfType<DropConcurrencyTriggerOperation>()
+            .ToList();
+
+        var diffs = base.GetDifferences(source, target);
 
         return [
             ..dropConcurrencyTriggerOperations,
-            ..base.GetDifferences(source, target),
+            ..diffs,
             ..createConcurrencyTriggerOperations
         ];
     }
@@ -55,22 +59,6 @@ internal class CustomMigrationsModelDiffer : MigrationsModelDiffer
             Add,
             Remove,
             (x, y, diff) => x.Name.Equals(y.Name, StringComparison.CurrentCultureIgnoreCase));
-
-    private IEnumerable<MigrationOperation> Remove(IEntityType source, DiffContext context)
-    {
-        var tableName = source.GetTableName() ?? string.Empty;
-        yield return new DropConcurrencyTriggerOperation(tableName.GetTriggerName());
-    }
-
-    private IEnumerable<MigrationOperation> Add(IEntityType target, DiffContext context)
-    {
-        var tableName = target.GetTableName() ?? string.Empty;
-        var versionColumnName = target.GetAnnotation(Constants.ConcurrencyTriggerAnnotationName).Value as string
-            ?? Constants.DefaultVersionColumnName;
-        yield return new CreateConcurrencyTriggerOperation(
-            tableName,
-            versionColumnName);
-    }
 
     private IEnumerable<MigrationOperation> Diff(IEntityType source, IEntityType target, DiffContext context)
     {
@@ -92,7 +80,23 @@ internal class CustomMigrationsModelDiffer : MigrationsModelDiffer
         }
     }
 
-    private static List<IEntityType> GetEntityTypesContainingMergeAnnotation(IRelationalModel? relationalModel)
+    private IEnumerable<MigrationOperation> Remove(IEntityType source, DiffContext context)
+    {
+        var tableName = source.GetTableName() ?? string.Empty;
+        yield return new DropConcurrencyTriggerOperation(tableName.GetTriggerName());
+    }
+
+    private IEnumerable<MigrationOperation> Add(IEntityType target, DiffContext context)
+    {
+        var tableName = target.GetTableName() ?? string.Empty;
+        var versionColumnName = target.GetAnnotation(Constants.ConcurrencyTriggerAnnotationName).Value as string
+            ?? Constants.DefaultVersionColumnName;
+        yield return new CreateConcurrencyTriggerOperation(
+            tableName,
+            versionColumnName);
+    }
+
+    private static List<IEntityType> GetEntityTypesContainingConcurrencyAnnotation(IRelationalModel? relationalModel)
     {
         if (relationalModel == null)
         {

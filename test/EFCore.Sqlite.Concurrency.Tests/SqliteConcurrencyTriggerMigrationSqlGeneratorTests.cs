@@ -16,25 +16,6 @@ namespace EFCore.Sqlite.Concurrency.Tests;
 #pragma warning disable EF1001 // Internal EF Core API usage.
 public class SqliteConcurrencyTriggerMigrationSqlGeneratorTests
 {
-    private static MigrationsSqlGeneratorDependencies GetGeneratorDependencies(Mock<IRelationalCommandBuilder> relationalCommandBuilder)
-    {
-        var relationalCommandBuilderFactory = new Mock<IRelationalCommandBuilderFactory>();
-        relationalCommandBuilderFactory.Setup(x => x.Create())
-            .Returns(relationalCommandBuilder.Object);
-
-        return new MigrationsSqlGeneratorDependencies(
-                relationalCommandBuilderFactory.Object,
-                Mock.Of<IUpdateSqlGenerator>(),
-                Mock.Of<ISqlGenerationHelper>(),
-                Mock.Of<IRelationalTypeMappingSource>(),
-                Mock.Of<ICurrentDbContext>(),
-                Mock.Of<IModificationCommandFactory>(),
-                Mock.Of<ILoggingOptions>(),
-                Mock.Of<IRelationalCommandDiagnosticsLogger>(),
-                Mock.Of<IDiagnosticsLogger<DbLoggerCategory.Migrations>>()
-            );
-    }
-
     [Test]
     public void Generate_WithCreateConcurrencyTriggerOperation_GeneratesCorrectSql()
     {
@@ -114,5 +95,24 @@ END;
 
         relationalCommandBuilder
             .Verify(x => x.Append(It.IsAny<string>()));
+    }
+
+    private static MigrationsSqlGeneratorDependencies GetGeneratorDependencies(Mock<IRelationalCommandBuilder> relationalCommandBuilder)
+    {
+        var relationalCommandBuilderFactory = new Mock<IRelationalCommandBuilderFactory>();
+        relationalCommandBuilderFactory.Setup(x => x.Create())
+            .Returns(relationalCommandBuilder.Object);
+
+        return new MigrationsSqlGeneratorDependencies(
+                relationalCommandBuilderFactory.Object,
+                Mock.Of<IUpdateSqlGenerator>(),
+                Mock.Of<ISqlGenerationHelper>(),
+                Mock.Of<IRelationalTypeMappingSource>(),
+                Mock.Of<ICurrentDbContext>(),
+                Mock.Of<IModificationCommandFactory>(),
+                Mock.Of<ILoggingOptions>(),
+                Mock.Of<IRelationalCommandDiagnosticsLogger>(),
+                Mock.Of<IDiagnosticsLogger<DbLoggerCategory.Migrations>>()
+            );
     }
 }

@@ -8,9 +8,10 @@
     <authors>Mohamed ben amar</authors>
     <owners>Mohamed ben amar</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <projectUrl>https://github.com/virmak/concurlite</projectUrl>
+    <projectUrl>https://github.com/virmak/ef-core-sqlite-concurrency</projectUrl>
     <readme>README.md</readme>
     <license type="expression">MIT</license>
+    <releaseNotes>First release</releaseNotes>
     <dependencies>
       <group targetFramework=".net8.0" />
     </dependencies>
