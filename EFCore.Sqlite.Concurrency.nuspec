@@ -19,6 +19,7 @@
   <files>
     <file src="README.md" target="" />
     <file src="src/EFCore.Sqlite.Concurrency/bin/$configuration$/net8.0/EFCore.Sqlite.Concurrency.dll" target="lib/net8.0" />
+    <file src="src/EFCore.Sqlite.Concurrency/bin/$configuration$/net8.0/EFCore.Sqlite.Concurrency.pdb" target="lib/net8.0" />
     <file src="src/EFCore.Sqlite.Concurrency.SourceGenerator/bin/$configuration$/netstandard2.0/EFCore.Sqlite.Concurrency.SourceGenerator.dll" target="analyzers\dotnet\cs" />
   </files>
 </package>
