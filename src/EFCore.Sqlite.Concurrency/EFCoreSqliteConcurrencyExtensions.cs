@@ -2,7 +2,6 @@ using System.Linq.Expressions;
 using EFCore.Sqlite.Concurrency.Core;
 using EFCore.Sqlite.Concurrency.Core.Operation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations.Builders;
 
@@ -21,54 +20,6 @@ public static class EFCoreSqliteConcurrencyExtensions
     {
         options.ReplaceService<IMigrationsModelDiffer, CustomMigrationsModelDiffer>();
         options.ReplaceService<IMigrationsSqlGenerator, SqliteConcurrencyTriggerMigrationSqlGenerator>();
-    }
-
-    /// <summary>
-    /// Configures the specified property of the entity to act as a concurrency token for optimistic concurrency control.
-    /// </summary>
-    /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    /// <typeparam name="TProperty">The type of the property to be used as the concurrency token.</typeparam>
-    /// <param name="builder">The EntityTypeBuilder for the entity being configured.</param>
-    /// <param name="propertyExpression">An expression specifying the property to be used as the concurrency token.</param>
-    /// <remarks>
-    /// Configures the specified property as a concurrency token with row versioning.
-    /// </remarks>
-    public static void HasConcurrencyToken<TEntity, TProperty>(
-        this EntityTypeBuilder<TEntity> builder,
-        Expression<Func<TEntity, TProperty>> propertyExpression)
-        where TEntity : class
-    {
-        var columnName = GetPropertyName(propertyExpression);
-        builder.HasAnnotation(Constants.ConcurrencyTriggerAnnotationName, columnName);
-
-        builder
-            .Property(propertyExpression)
-            .IsRowVersion()
-            .IsConcurrencyToken()
-            .HasDefaultValue(0);
-    }
-
-    /// <summary>
-    /// Configures the specified entity to include a concurrency token for optimistic concurrency control.
-    /// </summary>
-    /// <typeparam name="TEntity">The type of the entity.</typeparam>
-    /// <param name="builder">The EntityTypeBuilder for the entity being configured.</param>
-    /// <param name="columnName">Optional. The name of the column to use for the concurrency token.</param>
-    /// <remarks>
-    /// Configures the specified column (or default column) as a concurrency token with row versioning.
-    /// </remarks>
-    public static void HasConcurrencyToken<TEntity>(
-        this EntityTypeBuilder<TEntity> builder,
-        string? columnName = null)
-        where TEntity : class
-    {
-        builder.HasAnnotation(Constants.ConcurrencyTriggerAnnotationName, columnName);
-
-        builder
-            .Property<int>(columnName ?? Constants.DefaultVersionColumnName)
-            .IsRowVersion()
-            .IsConcurrencyToken()
-            .HasDefaultValue(0);
     }
 
     public static OperationBuilder<CreateConcurrencyTriggerOperation> CreateConcurrencyTrigger(

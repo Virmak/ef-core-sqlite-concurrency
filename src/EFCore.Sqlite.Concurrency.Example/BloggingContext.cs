@@ -40,6 +40,8 @@ public class Blog
     public required string Url { get; set; }
 
     public List<Post> Posts { get; } = [];
+    
+    public int RowVersion { get; internal set; }
 }
 
 public class Post
