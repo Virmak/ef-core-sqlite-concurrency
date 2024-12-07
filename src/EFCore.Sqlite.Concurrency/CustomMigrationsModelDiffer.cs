@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using EFCore.Sqlite.Concurrency.Core.Operation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -15,10 +16,12 @@ internal class CustomMigrationsModelDiffer : MigrationsModelDiffer
     public CustomMigrationsModelDiffer(
         IRelationalTypeMappingSource typeMappingSource,
         IMigrationsAnnotationProvider migrationsAnnotationProvider,
+        IRelationalAnnotationProvider relationalAnnotationProvider,
         IRowIdentityMapFactory rowIdentityMapFactory,
         CommandBatchPreparerDependencies commandBatchPreparerDependencies)
          : base(typeMappingSource,
                 migrationsAnnotationProvider,
+                relationalAnnotationProvider,
                 rowIdentityMapFactory,
                 commandBatchPreparerDependencies)
     {
@@ -89,7 +92,7 @@ internal class CustomMigrationsModelDiffer : MigrationsModelDiffer
     private IEnumerable<MigrationOperation> Add(IEntityType target, DiffContext context)
     {
         var tableName = target.GetTableName() ?? string.Empty;
-        var versionColumnName = target.GetAnnotation(Constants.ConcurrencyTriggerAnnotationName).Value as string
+        var versionColumnName = target.GetProperties().FirstOrDefault(x => x.IsConcurrencyToken)?.GetColumnName()
             ?? Constants.DefaultVersionColumnName;
         yield return new CreateConcurrencyTriggerOperation(
             tableName,
@@ -105,7 +108,7 @@ internal class CustomMigrationsModelDiffer : MigrationsModelDiffer
 
         return relationalModel.Model
             .GetEntityTypes()
-            .Where(x => x.GetAnnotations().Any(annotation => annotation.Name.Equals(Constants.ConcurrencyTriggerAnnotationName)))
+            .Where(x => x.GetProperties().Any(x => x.IsConcurrencyToken))
             .ToList();
     }
 }

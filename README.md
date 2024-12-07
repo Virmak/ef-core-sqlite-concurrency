@@ -49,18 +49,8 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
     modelBuilder
         .Entity<MyEntity>()
-        .HasConcurrencyToken();
-}
-```
-
-This will generate a new shadow property, if you prefer to use a property defined in your model, another overload is available for `HasConcurrencyToken` that takes a property expression.
-
-#### Define token in entity configuration class
-
-```csharp
-public void Configure(EntityTypeBuilder<Blog> builder)
-{
-    builder.HasConcurrencyToken();
+        .Property(x => x.RowVersion)
+        .IsConcurrencyToken();
 }
 ```
 
