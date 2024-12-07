@@ -13,5 +13,5 @@ internal class CSharpConcurrencyTriggerMigrationsGenerator : CSharpMigrationsGen
     }
 
     protected override IEnumerable<string> GetNamespaces(IEnumerable<MigrationOperation> operations)
-        => base.GetNamespaces(operations).Concat([typeof(EFCoreSqliteConcurrencyExtensions).Namespace]);
+        => base.GetNamespaces(operations).Concat([typeof(EFCoreSqliteConcurrencyExtensions).Namespace ?? string.Empty]);
 }

@@ -1,6 +1,7 @@
 ﻿using EFCore.Sqlite.Concurrency.Core;
 using EFCore.Sqlite.Concurrency.Core.Operation;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -12,7 +13,7 @@ using Moq;
 
 namespace EFCore.Sqlite.Concurrency.Tests;
 
-#pragma warning disable EF1001 // Internal EF Core API usage.
+#pragma warning disable EF1001 // Internal EF Core API usage.§§
 public class CustomMigrationsModelDifferTests
 {
     [Test]
@@ -21,6 +22,7 @@ public class CustomMigrationsModelDifferTests
         var sut = new CustomMigrationsModelDiffer(
             Mock.Of<IRelationalTypeMappingSource>(),
             Mock.Of<IMigrationsAnnotationProvider>(),
+            Mock.Of<IRelationalAnnotationProvider>(),
             Mock.Of<IRowIdentityMapFactory>(),
             GetCommandBatchPreparerDependencies());
         Mock<IRelationalModel> sourceMock = GetAnnotatedRelationalModelMock();
@@ -44,9 +46,10 @@ public class CustomMigrationsModelDifferTests
         var sut = new CustomMigrationsModelDiffer(
             Mock.Of<IRelationalTypeMappingSource>(),
             Mock.Of<IMigrationsAnnotationProvider>(),
+            Mock.Of<IRelationalAnnotationProvider>(),
             Mock.Of<IRowIdentityMapFactory>(),
             GetCommandBatchPreparerDependencies());
-        Mock<IRelationalModel> targetMock = GetAnnotatedRelationalModelMock();
+        var targetMock = GetAnnotatedRelationalModelMock();
         var sourceModel = new Mock<IModel>();
         sourceModel
             .Setup(x => x.GetEntityTypes())
@@ -68,18 +71,40 @@ public class CustomMigrationsModelDifferTests
             .SetupGet(x => x.Value)
             .Returns("TableName");
 
+        var modelMock = new Mock<IModel>();
         var modelEntityType = new Mock<IEntityType>();
-        modelEntityType
-            .Setup(x => x.GetAnnotations())
-            .Returns([new CreateConcurrencyAnnotation()]);
         modelEntityType
             .Setup(x => x.FindAnnotation(It.IsAny<string>()))
             .Returns(tableNameAnnotationMock.Object);
+
+        var propertyMock = new Mock<IProperty>();
+        propertyMock.SetupAllProperties();
+        
+        var declaringTypeMock = new Mock<ITypeBase>();
+
+        declaringTypeMock.SetupGet(x => x.Model)
+            .Returns(() => modelMock.Object);
+        declaringTypeMock.As<IReadOnlyTypeBase>()
+            .SetupGet(x => x.Model)
+            .Returns(()=> modelMock.As<IReadOnlyModel>().Object);
+        
+        propertyMock
+            .SetupGet(x => x.IsConcurrencyToken)
+            .Returns(true);
+        propertyMock
+            .SetupGet(x => x.DeclaringType)
+            .Returns(() => declaringTypeMock.Object);
+        propertyMock.SetupGet(x => x.Name)
+            .Returns("PropertyName");
+        
+        propertyMock.As<IReadOnlyProperty>()
+            .SetupGet(x => x.DeclaringType)
+            .Returns(() => declaringTypeMock.As<IReadOnlyTypeBase>().Object);
+
         modelEntityType
-            .Setup(x => x.GetAnnotation(It.Is<string>(x => x == Constants.ConcurrencyTriggerAnnotationName)))
-            .Returns(new CreateConcurrencyAnnotation());
+            .Setup(x => x.GetProperties())
+            .Returns([propertyMock.Object]);
         var firstTime = true;
-        var modelMock = new Mock<IModel>();
         modelMock
             .Setup(x => x.GetEntityTypes())
             .Returns(() =>
@@ -92,7 +117,6 @@ public class CustomMigrationsModelDifferTests
 
                 return [];
             });
-
         var sourceMock = new Mock<IRelationalModel>();
         sourceMock
             .SetupGet(x => x.Model)

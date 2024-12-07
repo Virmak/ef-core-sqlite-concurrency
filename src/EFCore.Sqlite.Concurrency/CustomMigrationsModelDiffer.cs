@@ -16,10 +16,12 @@ internal class CustomMigrationsModelDiffer : MigrationsModelDiffer
     public CustomMigrationsModelDiffer(
         IRelationalTypeMappingSource typeMappingSource,
         IMigrationsAnnotationProvider migrationsAnnotationProvider,
+        IRelationalAnnotationProvider relationalAnnotationProvider,
         IRowIdentityMapFactory rowIdentityMapFactory,
         CommandBatchPreparerDependencies commandBatchPreparerDependencies)
          : base(typeMappingSource,
                 migrationsAnnotationProvider,
+                relationalAnnotationProvider,
                 rowIdentityMapFactory,
                 commandBatchPreparerDependencies)
     {
